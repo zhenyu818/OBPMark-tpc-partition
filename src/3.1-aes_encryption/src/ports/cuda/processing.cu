@@ -64,6 +64,27 @@ __global__ void AES_KeyExpansion(DATA_PARAM)
         }
 }
 
+__global__ void AES_KeyExpansion_Redundant(DATA_PARAM)
+{
+    uint32_t temp;
+    uint32_t *expanded_key = (uint32_t*) AES_data->expanded_key;
+    int Nk = AES_data->key->Nk, Nr = AES_data->key->Nr, Nb = AES_data->key->Nb;
+    expanded_key[threadIdx.x] = *((uint32_t *)&AES_data->key->value[4*threadIdx.x]);
+    __syncthreads();
+    if(threadIdx.x == 0)
+        for(int i = Nk; i < Nb * (Nr+1); i++) {
+            temp = expanded_key[i-1];
+            if (i%Nk == 0) {
+                AES_SubWord(AES_RotWord(temp), AES_data->sbox, &temp);
+                temp ^= AES_data->rcon[i/Nk];
+            }
+            else if (Nk > 6 && i%Nk == 4){
+                AES_SubWord(temp,AES_data->sbox,&temp);
+            }
+            expanded_key[i] = expanded_key[i-Nk] ^ temp;
+        }
+}
+
 __device__ void AES_AddRoundKey(STATES_PARAM, ROUNDKEY_PARAM, NB_PARAM,  unsigned int round_number)
 {
 #ifdef CUDA_FINE
@@ -225,6 +246,31 @@ __device__ void counter_add(uint8_t *iv, uint64_t block){
 
 
 __global__ void AES_encrypt(AES_values_t *AES_data)
+{
+    int block = blockIdx.x;
+    int thread = threadIdx.x;
+    int offset =  16*(thread+block*blockDim.x);
+    if (offset >= AES_data->data_length) return;
+    uint8_t *plaintext = AES_data->plaintext+offset;
+    uint8_t *counter = AES_data->iv+offset;
+    uint8_t *final_state = AES_data->cyphertext+offset;
+
+    /*set the counter value */
+    counter_add(AES_data->iv, offset>>4);
+    SYNC;
+
+    /* Operations per state */
+    AES_encrypt_state((uint8_t (*)[4]) counter, (uint8_t (*)[4]) final_state, AES_data->key->Nb, AES_data->sbox, AES_data->expanded_key, AES_data->key->Nr);
+
+    /* XOR iv with plaintext */
+#ifdef CUDA_FINE
+     final_state[4*threadIdx.y+threadIdx.z] ^= plaintext[4*threadIdx.y+threadIdx.z];
+#else 
+    for(int y = 0; y < AES_data->key->Nb; y++) *((uint32_t*) &final_state[4*y]) ^= *((uint32_t*) &plaintext[4*y]);
+#endif
+}
+
+__global__ void AES_encrypt_Redundant(AES_values_t *AES_data)
 {
     int block = blockIdx.x;
     int thread = threadIdx.x;

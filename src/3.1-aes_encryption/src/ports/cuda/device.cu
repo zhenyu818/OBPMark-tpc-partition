@@ -6,6 +6,9 @@
 #include "device.h"
 #include "processing.h"
 
+#include "../../../../../libsmctrl/libsmctrl.h"
+#include "../../../../../libsmctrl/testbench.h"
+
 void init(
 	AES_data_t *AES_data,
 	AES_time_t *t,
@@ -161,12 +164,27 @@ void process_benchmark(
     dim3 threads(BLOCK_SIZE,1,1);
 #endif
     int key_threads = AES_data->host_key->Nk;
+    // Create two CUDA streams
+    cudaStream_t stream1, stream2;
+    cudaStreamCreate(&stream1);
+    cudaStreamCreate(&stream2);
+    libsmctrl_set_stream_mask_ext(stream1, 0xeull); // 1110，只允许用第一个TPC
+    libsmctrl_set_stream_mask_ext(stream2, 0xdull); // 1101，只允许用第二个TPC
     cudaEventRecord(*t->start);
-    AES_KeyExpansion<<<1,key_threads>>>(AES_data->dev);
+    AES_KeyExpansion_Redundant<<<1,key_threads,0,stream2>>>(AES_data->dev);
+    AES_KeyExpansion<<<1,key_threads,0,stream1>>>(AES_data->dev);
     cudaDeviceSynchronize();
-    AES_encrypt<<<n_blocks, threads>>>(AES_data->dev);
+    AES_encrypt_Redundant<<<n_blocks, threads,0,stream2>>>(AES_data->dev);
+    AES_encrypt<<<n_blocks, threads,0,stream1>>>(AES_data->dev);
     cudaDeviceSynchronize();
     cudaEventRecord(*t->stop);
+        // Synchronize streams
+    cudaStreamSynchronize(stream1);
+    cudaStreamSynchronize(stream2);
+
+    // Destroy streams
+    cudaStreamDestroy(stream1);
+    cudaStreamDestroy(stream2);
 }
 
 void copy_memory_to_host(

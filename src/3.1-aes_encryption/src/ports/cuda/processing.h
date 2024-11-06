@@ -24,6 +24,8 @@
 #define TIME_PARAM AES_time_t *t
 
 __global__ void AES_KeyExpansion(DATA_PARAM);
+__global__ void AES_KeyExpansion_Redundant(DATA_PARAM);
 __global__ void AES_encrypt(DATA_PARAM);
+__global__ void AES_encrypt_Redundant(DATA_PARAM);
 
 #endif // OBPMARK_AES_H_
