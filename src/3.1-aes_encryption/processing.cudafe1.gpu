@@ -1,0 +1,639 @@
+typedef char __nv_bool;
+# 16 "./include/device.h"
+enum AES_keysize_t {
+# 17 "./include/device.h"
+AES_KEY128 = 128,
+# 18 "./include/device.h"
+AES_KEY192 = 192,
+# 19 "./include/device.h"
+AES_KEY256 = 256};
+# 28 "./include/device.h"
+struct AES_key_t;
+# 36 "./include/device.h"
+struct AES_values_t;
+# 173 "/usr/include/c++/9/bits/basic_string.h" 3
+enum _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEUt_E {
+# 173 "/usr/include/c++/9/bits/basic_string.h" 3
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17_S_local_capacityE = 15};
+# 173 "/usr/include/c++/9/bits/basic_string.h" 3
+enum _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEUt_E {
+# 173 "/usr/include/c++/9/bits/basic_string.h" 3
+_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE17_S_local_capacityE = 3};
+# 173 "/usr/include/c++/9/bits/basic_string.h" 3
+enum _ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEUt_E {
+# 173 "/usr/include/c++/9/bits/basic_string.h" 3
+_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE17_S_local_capacityE = 7};
+# 173 "/usr/include/c++/9/bits/basic_string.h" 3
+enum _ZNSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEEUt_E {
+# 173 "/usr/include/c++/9/bits/basic_string.h" 3
+_ZNSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE17_S_local_capacityE = 3};
+# 209 "/usr/lib/gcc/aarch64-linux-gnu/9/include/stddef.h" 3
+typedef unsigned long size_t;
+#include "crt/device_runtime.h"
+# 38 "/usr/include/aarch64-linux-gnu/bits/types.h" 3
+typedef unsigned char __uint8_t;
+# 42 "/usr/include/aarch64-linux-gnu/bits/types.h" 3
+typedef unsigned __uint32_t;
+# 45 "/usr/include/aarch64-linux-gnu/bits/types.h" 3
+typedef unsigned long __uint64_t;
+# 24 "/usr/include/aarch64-linux-gnu/bits/stdint-uintn.h" 3
+typedef __uint8_t uint8_t;
+# 26 "/usr/include/aarch64-linux-gnu/bits/stdint-uintn.h" 3
+typedef __uint32_t uint32_t;
+# 27 "/usr/include/aarch64-linux-gnu/bits/stdint-uintn.h" 3
+typedef __uint64_t uint64_t;
+# 20 "./include/device.h"
+typedef enum AES_keysize_t AES_keysize_t;
+# 28 "./include/device.h"
+struct AES_key_t {
+# 29 "./include/device.h"
+uint8_t *value;
+# 30 "./include/device.h"
+AES_keysize_t size;
+# 31 "./include/device.h"
+uint32_t Nb;
+# 32 "./include/device.h"
+uint32_t Nk;
+# 33 "./include/device.h"
+uint32_t Nr;};
+# 34 "./include/device.h"
+typedef struct AES_key_t AES_key_t;
+# 36 "./include/device.h"
+struct AES_values_t {
+# 38 "./include/device.h"
+AES_key_t *key;
+# 39 "./include/device.h"
+uint8_t *plaintext;
+# 40 "./include/device.h"
+size_t data_length;
+# 41 "./include/device.h"
+uint8_t *expanded_key;
+# 42 "./include/device.h"
+uint8_t *cyphertext;
+# 43 "./include/device.h"
+uint8_t *iv;
+# 44 "./include/device.h"
+uint8_t *sbox;
+# 45 "./include/device.h"
+uint8_t *rcon;};
+# 258 "/usr/include/aarch64-linux-gnu/c++/9/bits/c++config.h" 3
+typedef unsigned long _ZSt6size_t;
+#if !defined(__CUDABE__)
+# 105 "/usr/include/aarch64-linux-gnu/bits/stdio2.h" 3
+ __device_builtin__ ___device__(extern  __no_sc__) __inline__ __attribute__((__artificial__)) __attribute__((__always_inline__)) __attribute__((__gnu_inline__)) int printf(const char *__restrict__, ...);
+#endif
+#if !defined(__CUDABE__)
+# 167 "/usr/local/cuda/include/crt/device_functions.h"
+ __device_builtin__ ___device__(extern  __no_sc__) void __syncthreads(void);
+#endif
+# 43 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z11AES_SubWordjPhPj(uint32_t, uint8_t *, uint32_t *);
+# 96 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z15AES_AddRoundKeyPA4_hS0_Phjj(uint8_t (*)[4], uint8_t (*)[4], uint8_t *, unsigned, unsigned);
+# 113 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z12AES_SubBytesPA4_hPh(uint8_t (*)[4], uint8_t *);
+# 130 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z13AES_ShiftRowsPA4_h(uint8_t (*)[4]);
+# 168 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z14AES_MixColumnsPA4_h(uint8_t (*)[4]);
+# 210 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z17AES_encrypt_statePA4_hS0_jPhS1_j(uint8_t (*)[4], uint8_t (*)[4], unsigned, uint8_t *, uint8_t *, unsigned);
+# 234 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z11counter_addPhmi(uint8_t *, uint64_t, int);
+# 253 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z11counter_addPhm(uint8_t *, uint64_t);
+# 48 "src/ports/cuda/processing.cu"
+__global__ __var_used__ extern void _Z16AES_KeyExpansionP12AES_values_t(struct AES_values_t *);
+# 72 "src/ports/cuda/processing.cu"
+__global__ __var_used__ extern void _Z26AES_KeyExpansion_RedundantP12AES_values_t(struct AES_values_t *);
+# 264 "src/ports/cuda/processing.cu"
+__global__ __var_used__ extern void _Z11AES_encryptP12AES_values_t(struct AES_values_t *);
+# 291 "src/ports/cuda/processing.cu"
+__global__ __var_used__ extern void _Z21AES_encrypt_Redundantv(void);
+#include "common_functions.h"
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+# 153 "/usr/local/cuda/include/crt/common_functions.h"
+ __device_builtin__ ___device__(extern  __no_sc__) __attribute__((__artificial__)) __attribute__((__always_inline__)) int printf(const char *, ...);
+#endif
+#if !defined(__CUDABE__)
+#endif
+# 43 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z11AES_SubWordjPhPj(
+# 43 "src/ports/cuda/processing.cu"
+uint32_t word, 
+# 43 "src/ports/cuda/processing.cu"
+uint8_t *sbox, 
+# 43 "src/ports/cuda/processing.cu"
+uint32_t *result){
+# 44 "src/ports/cuda/processing.cu"
+{
+# 45 "src/ports/cuda/processing.cu"
+(*result) = ((uint32_t)((((((int)(sbox[(word >> 24)])) << 24) | (((int)(sbox[((uint8_t)(word >> 16))])) << 16)) | (((int)(sbox[((uint8_t)(word >> 8))])) << 8)) | ((int)(sbox[((uint8_t)word)])))); 
+# 46 "src/ports/cuda/processing.cu"
+}}
+# 96 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z15AES_AddRoundKeyPA4_hS0_Phjj(
+# 96 "src/ports/cuda/processing.cu"
+uint8_t (*in_state)[4], 
+# 96 "src/ports/cuda/processing.cu"
+uint8_t (*state)[4], 
+# 96 "src/ports/cuda/processing.cu"
+uint8_t *roundkey, 
+# 96 "src/ports/cuda/processing.cu"
+unsigned Nb, 
+# 96 "src/ports/cuda/processing.cu"
+unsigned round_number){
+# 97 "src/ports/cuda/processing.cu"
+{
+# 103 "src/ports/cuda/processing.cu"
+{
+# 103 "src/ports/cuda/processing.cu"
+ int i;
+# 103 "src/ports/cuda/processing.cu"
+i = 0;
+# 103 "src/ports/cuda/processing.cu"
+for (; (((unsigned)i) < Nb); i++)
+# 104 "src/ports/cuda/processing.cu"
+{
+# 105 "src/ports/cuda/processing.cu"
+{
+# 105 "src/ports/cuda/processing.cu"
+ int j;
+# 105 "src/ports/cuda/processing.cu"
+j = 0;
+# 105 "src/ports/cuda/processing.cu"
+for (; (j < 4); j++)
+# 106 "src/ports/cuda/processing.cu"
+{
+# 107 "src/ports/cuda/processing.cu"
+(((state[i]))[j]) = ((uint8_t)(((int)(((in_state[i]))[j])) ^ ((int)(roundkey[((((round_number * Nb) * 4U) + (((unsigned)i) * Nb)) + ((unsigned)j))]))));
+# 108 "src/ports/cuda/processing.cu"
+} }
+# 109 "src/ports/cuda/processing.cu"
+} } 
+# 111 "src/ports/cuda/processing.cu"
+}}
+# 113 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z12AES_SubBytesPA4_hPh(
+# 113 "src/ports/cuda/processing.cu"
+uint8_t (*state)[4], 
+# 113 "src/ports/cuda/processing.cu"
+uint8_t *sbox){
+# 114 "src/ports/cuda/processing.cu"
+{
+# 120 "src/ports/cuda/processing.cu"
+{
+# 120 "src/ports/cuda/processing.cu"
+ int i;
+# 120 "src/ports/cuda/processing.cu"
+i = 0;
+# 120 "src/ports/cuda/processing.cu"
+for (; (i < 4); i++)
+# 121 "src/ports/cuda/processing.cu"
+{
+# 122 "src/ports/cuda/processing.cu"
+{
+# 122 "src/ports/cuda/processing.cu"
+ int j;
+# 122 "src/ports/cuda/processing.cu"
+j = 0;
+# 122 "src/ports/cuda/processing.cu"
+for (; (j < 4); j++)
+# 123 "src/ports/cuda/processing.cu"
+{
+# 124 "src/ports/cuda/processing.cu"
+(((state[i]))[j]) = (sbox[(((state[i]))[j])]);
+# 125 "src/ports/cuda/processing.cu"
+} }
+# 126 "src/ports/cuda/processing.cu"
+} } 
+# 128 "src/ports/cuda/processing.cu"
+}}
+# 130 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z13AES_ShiftRowsPA4_h(
+# 130 "src/ports/cuda/processing.cu"
+uint8_t (*state)[4]){
+# 131 "src/ports/cuda/processing.cu"
+{
+# 139 "src/ports/cuda/processing.cu"
+ uint8_t __cuda_local_var_39490_13_non_const_temp;
+# 143 "src/ports/cuda/processing.cu"
+__cuda_local_var_39490_13_non_const_temp = (((state[0]))[1]);
+# 144 "src/ports/cuda/processing.cu"
+(((state[0]))[1]) = (((state[1]))[1]);
+# 145 "src/ports/cuda/processing.cu"
+(((state[1]))[1]) = (((state[2]))[1]);
+# 146 "src/ports/cuda/processing.cu"
+(((state[2]))[1]) = (((state[3]))[1]);
+# 147 "src/ports/cuda/processing.cu"
+(((state[3]))[1]) = __cuda_local_var_39490_13_non_const_temp;
+# 150 "src/ports/cuda/processing.cu"
+__cuda_local_var_39490_13_non_const_temp = (((state[0]))[2]);
+# 151 "src/ports/cuda/processing.cu"
+(((state[0]))[2]) = (((state[2]))[2]);
+# 152 "src/ports/cuda/processing.cu"
+(((state[2]))[2]) = __cuda_local_var_39490_13_non_const_temp;
+# 153 "src/ports/cuda/processing.cu"
+__cuda_local_var_39490_13_non_const_temp = (((state[1]))[2]);
+# 154 "src/ports/cuda/processing.cu"
+(((state[1]))[2]) = (((state[3]))[2]);
+# 155 "src/ports/cuda/processing.cu"
+(((state[3]))[2]) = __cuda_local_var_39490_13_non_const_temp;
+# 158 "src/ports/cuda/processing.cu"
+__cuda_local_var_39490_13_non_const_temp = (((state[3]))[3]);
+# 159 "src/ports/cuda/processing.cu"
+(((state[3]))[3]) = (((state[2]))[3]);
+# 160 "src/ports/cuda/processing.cu"
+(((state[2]))[3]) = (((state[1]))[3]);
+# 161 "src/ports/cuda/processing.cu"
+(((state[1]))[3]) = (((state[0]))[3]);
+# 162 "src/ports/cuda/processing.cu"
+(((state[0]))[3]) = __cuda_local_var_39490_13_non_const_temp; 
+# 164 "src/ports/cuda/processing.cu"
+}}
+# 168 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z14AES_MixColumnsPA4_h(
+# 168 "src/ports/cuda/processing.cu"
+uint8_t (*state)[4]){
+# 169 "src/ports/cuda/processing.cu"
+{
+# 180 "src/ports/cuda/processing.cu"
+ uint8_t __cuda_local_var_39522_13_non_const_Tmp;
+# 180 "src/ports/cuda/processing.cu"
+ uint8_t __cuda_local_var_39522_18_non_const_Tm;
+# 180 "src/ports/cuda/processing.cu"
+ uint8_t __cuda_local_var_39522_22_non_const_t;
+# 181 "src/ports/cuda/processing.cu"
+{
+# 181 "src/ports/cuda/processing.cu"
+ int i;
+# 181 "src/ports/cuda/processing.cu"
+i = 0;
+# 181 "src/ports/cuda/processing.cu"
+for (; (i < 4); ++i)
+# 182 "src/ports/cuda/processing.cu"
+{
+# 183 "src/ports/cuda/processing.cu"
+__cuda_local_var_39522_22_non_const_t = (((state[i]))[0]);
+# 184 "src/ports/cuda/processing.cu"
+__cuda_local_var_39522_13_non_const_Tmp = ((uint8_t)(((((int)(((state[i]))[0])) ^ ((int)(((state[i]))[1]))) ^ ((int)(((state[i]))[2]))) ^ ((int)(((state[i]))[3]))));
+# 186 "src/ports/cuda/processing.cu"
+__cuda_local_var_39522_18_non_const_Tm = ((uint8_t)(((int)(((state[i]))[0])) ^ ((int)(((state[i]))[1]))));
+# 187 "src/ports/cuda/processing.cu"
+__cuda_local_var_39522_18_non_const_Tm = ((uint8_t)((((int)__cuda_local_var_39522_18_non_const_Tm) << 1) ^ (((((int)__cuda_local_var_39522_18_non_const_Tm) >> 7) & 1) * 27)));
+# 188 "src/ports/cuda/processing.cu"
+(((state[i]))[0]) ^= (((int)__cuda_local_var_39522_18_non_const_Tm) ^ ((int)__cuda_local_var_39522_13_non_const_Tmp));
+# 190 "src/ports/cuda/processing.cu"
+__cuda_local_var_39522_18_non_const_Tm = ((uint8_t)(((int)(((state[i]))[1])) ^ ((int)(((state[i]))[2]))));
+# 191 "src/ports/cuda/processing.cu"
+__cuda_local_var_39522_18_non_const_Tm = ((uint8_t)((((int)__cuda_local_var_39522_18_non_const_Tm) << 1) ^ (((((int)__cuda_local_var_39522_18_non_const_Tm) >> 7) & 1) * 27)));
+# 192 "src/ports/cuda/processing.cu"
+(((state[i]))[1]) ^= (((int)__cuda_local_var_39522_18_non_const_Tm) ^ ((int)__cuda_local_var_39522_13_non_const_Tmp));
+# 194 "src/ports/cuda/processing.cu"
+__cuda_local_var_39522_18_non_const_Tm = ((uint8_t)(((int)(((state[i]))[2])) ^ ((int)(((state[i]))[3]))));
+# 195 "src/ports/cuda/processing.cu"
+__cuda_local_var_39522_18_non_const_Tm = ((uint8_t)((((int)__cuda_local_var_39522_18_non_const_Tm) << 1) ^ (((((int)__cuda_local_var_39522_18_non_const_Tm) >> 7) & 1) * 27)));
+# 196 "src/ports/cuda/processing.cu"
+(((state[i]))[2]) ^= (((int)__cuda_local_var_39522_18_non_const_Tm) ^ ((int)__cuda_local_var_39522_13_non_const_Tmp));
+# 198 "src/ports/cuda/processing.cu"
+__cuda_local_var_39522_18_non_const_Tm = ((uint8_t)(((int)(((state[i]))[3])) ^ ((int)__cuda_local_var_39522_22_non_const_t)));
+# 199 "src/ports/cuda/processing.cu"
+__cuda_local_var_39522_18_non_const_Tm = ((uint8_t)((((int)__cuda_local_var_39522_18_non_const_Tm) << 1) ^ (((((int)__cuda_local_var_39522_18_non_const_Tm) >> 7) & 1) * 27)));
+# 200 "src/ports/cuda/processing.cu"
+(((state[i]))[3]) ^= (((int)__cuda_local_var_39522_18_non_const_Tm) ^ ((int)__cuda_local_var_39522_13_non_const_Tmp));
+# 201 "src/ports/cuda/processing.cu"
+} } 
+# 203 "src/ports/cuda/processing.cu"
+}}
+# 210 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z17AES_encrypt_statePA4_hS0_jPhS1_j(
+# 210 "src/ports/cuda/processing.cu"
+uint8_t (*in_state)[4], 
+# 210 "src/ports/cuda/processing.cu"
+uint8_t (*state)[4], 
+# 210 "src/ports/cuda/processing.cu"
+unsigned Nb, 
+# 210 "src/ports/cuda/processing.cu"
+uint8_t *sbox, 
+# 210 "src/ports/cuda/processing.cu"
+uint8_t *roundkey, 
+# 210 "src/ports/cuda/processing.cu"
+unsigned num_rounds){
+# 211 "src/ports/cuda/processing.cu"
+{
+# 212 "src/ports/cuda/processing.cu"
+_Z15AES_AddRoundKeyPA4_hS0_Phjj(in_state, state, roundkey, Nb, 0U);
+# 213 "src/ports/cuda/processing.cu"
+;
+# 214 "src/ports/cuda/processing.cu"
+{
+# 214 "src/ports/cuda/processing.cu"
+ unsigned roundi;
+# 214 "src/ports/cuda/processing.cu"
+roundi = 1U;
+# 214 "src/ports/cuda/processing.cu"
+for (; (roundi < num_rounds); roundi++)
+# 215 "src/ports/cuda/processing.cu"
+{
+# 216 "src/ports/cuda/processing.cu"
+_Z12AES_SubBytesPA4_hPh(state, sbox);
+# 217 "src/ports/cuda/processing.cu"
+;
+# 218 "src/ports/cuda/processing.cu"
+_Z13AES_ShiftRowsPA4_h(state);
+# 219 "src/ports/cuda/processing.cu"
+;
+# 220 "src/ports/cuda/processing.cu"
+_Z14AES_MixColumnsPA4_h(state);
+# 221 "src/ports/cuda/processing.cu"
+;
+# 222 "src/ports/cuda/processing.cu"
+_Z15AES_AddRoundKeyPA4_hS0_Phjj(state, state, roundkey, Nb, roundi);
+# 223 "src/ports/cuda/processing.cu"
+;
+# 224 "src/ports/cuda/processing.cu"
+} }
+# 226 "src/ports/cuda/processing.cu"
+_Z12AES_SubBytesPA4_hPh(state, sbox);
+# 227 "src/ports/cuda/processing.cu"
+;
+# 228 "src/ports/cuda/processing.cu"
+_Z13AES_ShiftRowsPA4_h(state);
+# 229 "src/ports/cuda/processing.cu"
+;
+# 230 "src/ports/cuda/processing.cu"
+_Z15AES_AddRoundKeyPA4_hS0_Phjj(state, state, roundkey, Nb, num_rounds);
+# 231 "src/ports/cuda/processing.cu"
+; 
+# 232 "src/ports/cuda/processing.cu"
+}}
+# 234 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z11counter_addPhmi(
+# 234 "src/ports/cuda/processing.cu"
+uint8_t *iv, 
+# 234 "src/ports/cuda/processing.cu"
+uint64_t block, 
+# 234 "src/ports/cuda/processing.cu"
+int id){
+# 235 "src/ports/cuda/processing.cu"
+{
+# 236 "src/ports/cuda/processing.cu"
+ uint64_t __cuda_local_var_39578_14_non_const_carry;
+# 237 "src/ports/cuda/processing.cu"
+ uint8_t *__cuda_local_var_39579_14_non_const_counter;
+# 237 "src/ports/cuda/processing.cu"
+__cuda_local_var_39579_14_non_const_counter = (iv + (16U * (((blockIdx.x) * (blockDim.x)) + (threadIdx.x))));
+# 238 "src/ports/cuda/processing.cu"
+__cuda_local_var_39578_14_non_const_carry = (((unsigned long)(iv[id])) + block);
+# 239 "src/ports/cuda/processing.cu"
+if ((block <= ((unsigned long)(255 - ((int)(iv[id]))))) || (id == 0))
+# 240 "src/ports/cuda/processing.cu"
+{
+# 241 "src/ports/cuda/processing.cu"
+(__cuda_local_var_39579_14_non_const_counter[id]) = ((uint8_t)__cuda_local_var_39578_14_non_const_carry);
+# 242 "src/ports/cuda/processing.cu"
+{
+# 242 "src/ports/cuda/processing.cu"
+ int i;
+# 242 "src/ports/cuda/processing.cu"
+i = (id - 1);
+# 242 "src/ports/cuda/processing.cu"
+for (; (i >= 0); i--) {
+# 243 "src/ports/cuda/processing.cu"
+(__cuda_local_var_39579_14_non_const_counter[i]) = (iv[i]); } }
+# 244 "src/ports/cuda/processing.cu"
+return;
+# 245 "src/ports/cuda/processing.cu"
+}
+# 247 "src/ports/cuda/processing.cu"
+else 
+# 247 "src/ports/cuda/processing.cu"
+{
+# 248 "src/ports/cuda/processing.cu"
+(__cuda_local_var_39579_14_non_const_counter[id]) = ((uint8_t)__cuda_local_var_39578_14_non_const_carry);
+# 249 "src/ports/cuda/processing.cu"
+__cuda_local_var_39578_14_non_const_carry >>= 8;
+# 250 "src/ports/cuda/processing.cu"
+_Z11counter_addPhmi(iv, __cuda_local_var_39578_14_non_const_carry, (id - 1));
+# 251 "src/ports/cuda/processing.cu"
+} 
+# 252 "src/ports/cuda/processing.cu"
+}}
+# 253 "src/ports/cuda/processing.cu"
+___device__(static  __no_sc__) void _Z11counter_addPhm(
+# 253 "src/ports/cuda/processing.cu"
+uint8_t *iv, 
+# 253 "src/ports/cuda/processing.cu"
+uint64_t block){
+# 254 "src/ports/cuda/processing.cu"
+{
+# 259 "src/ports/cuda/processing.cu"
+_Z11counter_addPhmi(iv, block, 15); 
+# 260 "src/ports/cuda/processing.cu"
+}}
+# 48 "src/ports/cuda/processing.cu"
+__global__ __var_used__ void _Z16AES_KeyExpansionP12AES_values_t(
+# 48 "src/ports/cuda/processing.cu"
+struct AES_values_t *AES_data){
+# 49 "src/ports/cuda/processing.cu"
+{
+# 50 "src/ports/cuda/processing.cu"
+ uint32_t __cuda_local_var_39401_14_non_const_temp;
+# 51 "src/ports/cuda/processing.cu"
+ uint32_t *__cuda_local_var_39402_15_non_const_expanded_key;
+# 52 "src/ports/cuda/processing.cu"
+ int __cuda_local_var_39403_9_non_const_Nk;
+# 52 "src/ports/cuda/processing.cu"
+ int __cuda_local_var_39403_33_non_const_Nr;
+# 52 "src/ports/cuda/processing.cu"
+ int __cuda_local_var_39403_57_non_const_Nb;
+# 51 "src/ports/cuda/processing.cu"
+__cuda_local_var_39402_15_non_const_expanded_key = ((uint32_t *)(AES_data->expanded_key));
+# 52 "src/ports/cuda/processing.cu"
+__cuda_local_var_39403_9_non_const_Nk = ((int)((AES_data->key)->Nk));
+# 52 "src/ports/cuda/processing.cu"
+__cuda_local_var_39403_33_non_const_Nr = ((int)((AES_data->key)->Nr));
+# 52 "src/ports/cuda/processing.cu"
+__cuda_local_var_39403_57_non_const_Nb = ((int)((AES_data->key)->Nb));
+# 53 "src/ports/cuda/processing.cu"
+(__cuda_local_var_39402_15_non_const_expanded_key[(threadIdx.x)]) = (*((uint32_t *)(((AES_data->key)->value) + (4U * (threadIdx.x)))));
+# 54 "src/ports/cuda/processing.cu"
+__syncthreads();
+# 55 "src/ports/cuda/processing.cu"
+if ((threadIdx.x) == 0U) {
+# 56 "src/ports/cuda/processing.cu"
+{
+# 56 "src/ports/cuda/processing.cu"
+ int i;
+# 56 "src/ports/cuda/processing.cu"
+i = __cuda_local_var_39403_9_non_const_Nk;
+# 56 "src/ports/cuda/processing.cu"
+for (; (i < (__cuda_local_var_39403_57_non_const_Nb * (__cuda_local_var_39403_33_non_const_Nr + 1))); i++)
+# 57 "src/ports/cuda/processing.cu"
+{
+# 58 "src/ports/cuda/processing.cu"
+__cuda_local_var_39401_14_non_const_temp = (__cuda_local_var_39402_15_non_const_expanded_key[(i - 1)]);
+# 59 "src/ports/cuda/processing.cu"
+if ((i % __cuda_local_var_39403_9_non_const_Nk) == 0)
+# 60 "src/ports/cuda/processing.cu"
+{
+# 61 "src/ports/cuda/processing.cu"
+_Z11AES_SubWordjPhPj(((__cuda_local_var_39401_14_non_const_temp >> 8) | (__cuda_local_var_39401_14_non_const_temp << 24)), (AES_data->sbox), (&__cuda_local_var_39401_14_non_const_temp));
+# 62 "src/ports/cuda/processing.cu"
+__cuda_local_var_39401_14_non_const_temp ^= ((unsigned)((AES_data->rcon)[(i / __cuda_local_var_39403_9_non_const_Nk)]));
+# 63 "src/ports/cuda/processing.cu"
+} else  {
+# 64 "src/ports/cuda/processing.cu"
+if ((__cuda_local_var_39403_9_non_const_Nk > 6) && ((i % __cuda_local_var_39403_9_non_const_Nk) == 4))
+# 65 "src/ports/cuda/processing.cu"
+{
+# 66 "src/ports/cuda/processing.cu"
+_Z11AES_SubWordjPhPj(__cuda_local_var_39401_14_non_const_temp, (AES_data->sbox), (&__cuda_local_var_39401_14_non_const_temp));
+# 67 "src/ports/cuda/processing.cu"
+} }
+# 68 "src/ports/cuda/processing.cu"
+(__cuda_local_var_39402_15_non_const_expanded_key[i]) = ((__cuda_local_var_39402_15_non_const_expanded_key[(i - __cuda_local_var_39403_9_non_const_Nk)]) ^ __cuda_local_var_39401_14_non_const_temp);
+# 69 "src/ports/cuda/processing.cu"
+} } } 
+# 70 "src/ports/cuda/processing.cu"
+}}
+# 72 "src/ports/cuda/processing.cu"
+__global__ __var_used__ void _Z26AES_KeyExpansion_RedundantP12AES_values_t(
+# 72 "src/ports/cuda/processing.cu"
+struct AES_values_t *AES_data){
+# 73 "src/ports/cuda/processing.cu"
+{
+# 74 "src/ports/cuda/processing.cu"
+ uint32_t __cuda_local_var_39425_14_non_const_temp;
+# 75 "src/ports/cuda/processing.cu"
+ uint32_t *__cuda_local_var_39426_15_non_const_expanded_key;
+# 76 "src/ports/cuda/processing.cu"
+ int __cuda_local_var_39427_9_non_const_Nk;
+# 76 "src/ports/cuda/processing.cu"
+ int __cuda_local_var_39427_33_non_const_Nr;
+# 76 "src/ports/cuda/processing.cu"
+ int __cuda_local_var_39427_57_non_const_Nb;
+# 75 "src/ports/cuda/processing.cu"
+__cuda_local_var_39426_15_non_const_expanded_key = ((uint32_t *)(AES_data->expanded_key));
+# 76 "src/ports/cuda/processing.cu"
+__cuda_local_var_39427_9_non_const_Nk = ((int)((AES_data->key)->Nk));
+# 76 "src/ports/cuda/processing.cu"
+__cuda_local_var_39427_33_non_const_Nr = ((int)((AES_data->key)->Nr));
+# 76 "src/ports/cuda/processing.cu"
+__cuda_local_var_39427_57_non_const_Nb = ((int)((AES_data->key)->Nb));
+# 77 "src/ports/cuda/processing.cu"
+(__cuda_local_var_39426_15_non_const_expanded_key[(threadIdx.x)]) = (*((uint32_t *)(((AES_data->key)->value) + (4U * (threadIdx.x)))));
+# 78 "src/ports/cuda/processing.cu"
+__syncthreads();
+# 79 "src/ports/cuda/processing.cu"
+if ((threadIdx.x) == 0U) {
+# 80 "src/ports/cuda/processing.cu"
+{
+# 80 "src/ports/cuda/processing.cu"
+ int i;
+# 80 "src/ports/cuda/processing.cu"
+i = __cuda_local_var_39427_9_non_const_Nk;
+# 80 "src/ports/cuda/processing.cu"
+for (; (i < (__cuda_local_var_39427_57_non_const_Nb * (__cuda_local_var_39427_33_non_const_Nr + 1))); i++)
+# 81 "src/ports/cuda/processing.cu"
+{
+# 82 "src/ports/cuda/processing.cu"
+__cuda_local_var_39425_14_non_const_temp = (__cuda_local_var_39426_15_non_const_expanded_key[(i - 1)]);
+# 83 "src/ports/cuda/processing.cu"
+if ((i % __cuda_local_var_39427_9_non_const_Nk) == 0)
+# 84 "src/ports/cuda/processing.cu"
+{
+# 85 "src/ports/cuda/processing.cu"
+_Z11AES_SubWordjPhPj(((__cuda_local_var_39425_14_non_const_temp >> 8) | (__cuda_local_var_39425_14_non_const_temp << 24)), (AES_data->sbox), (&__cuda_local_var_39425_14_non_const_temp));
+# 86 "src/ports/cuda/processing.cu"
+__cuda_local_var_39425_14_non_const_temp ^= ((unsigned)((AES_data->rcon)[(i / __cuda_local_var_39427_9_non_const_Nk)]));
+# 87 "src/ports/cuda/processing.cu"
+} else  {
+# 88 "src/ports/cuda/processing.cu"
+if ((__cuda_local_var_39427_9_non_const_Nk > 6) && ((i % __cuda_local_var_39427_9_non_const_Nk) == 4))
+# 89 "src/ports/cuda/processing.cu"
+{
+# 90 "src/ports/cuda/processing.cu"
+_Z11AES_SubWordjPhPj(__cuda_local_var_39425_14_non_const_temp, (AES_data->sbox), (&__cuda_local_var_39425_14_non_const_temp));
+# 91 "src/ports/cuda/processing.cu"
+} }
+# 92 "src/ports/cuda/processing.cu"
+(__cuda_local_var_39426_15_non_const_expanded_key[i]) = ((__cuda_local_var_39426_15_non_const_expanded_key[(i - __cuda_local_var_39427_9_non_const_Nk)]) ^ __cuda_local_var_39425_14_non_const_temp);
+# 93 "src/ports/cuda/processing.cu"
+} } } 
+# 94 "src/ports/cuda/processing.cu"
+}}
+# 264 "src/ports/cuda/processing.cu"
+__global__ __var_used__ void _Z11AES_encryptP12AES_values_t(
+# 264 "src/ports/cuda/processing.cu"
+struct AES_values_t *AES_data){
+# 265 "src/ports/cuda/processing.cu"
+{
+# 266 "src/ports/cuda/processing.cu"
+ int __cuda_local_var_39608_9_non_const_block;
+# 267 "src/ports/cuda/processing.cu"
+ int __cuda_local_var_39609_9_non_const_thread;
+# 268 "src/ports/cuda/processing.cu"
+ int __cuda_local_var_39610_9_non_const_offset;
+# 271 "src/ports/cuda/processing.cu"
+ uint8_t *__cuda_local_var_39613_14_non_const_plaintext;
+# 272 "src/ports/cuda/processing.cu"
+ uint8_t *__cuda_local_var_39614_14_non_const_counter;
+# 273 "src/ports/cuda/processing.cu"
+ uint8_t *__cuda_local_var_39615_14_non_const_final_state;
+# 266 "src/ports/cuda/processing.cu"
+__cuda_local_var_39608_9_non_const_block = ((int)(blockIdx.x));
+# 267 "src/ports/cuda/processing.cu"
+__cuda_local_var_39609_9_non_const_thread = ((int)(threadIdx.x));
+# 268 "src/ports/cuda/processing.cu"
+__cuda_local_var_39610_9_non_const_offset = ((int)(16U * (((unsigned)__cuda_local_var_39609_9_non_const_thread) + (((unsigned)__cuda_local_var_39608_9_non_const_block) * (blockDim.x)))));
+# 269 "src/ports/cuda/processing.cu"
+if (((unsigned long)__cuda_local_var_39610_9_non_const_offset) >= (AES_data->data_length)) {
+# 270 "src/ports/cuda/processing.cu"
+return; }
+# 271 "src/ports/cuda/processing.cu"
+__cuda_local_var_39613_14_non_const_plaintext = ((AES_data->plaintext) + __cuda_local_var_39610_9_non_const_offset);
+# 272 "src/ports/cuda/processing.cu"
+__cuda_local_var_39614_14_non_const_counter = ((AES_data->iv) + __cuda_local_var_39610_9_non_const_offset);
+# 273 "src/ports/cuda/processing.cu"
+__cuda_local_var_39615_14_non_const_final_state = ((AES_data->cyphertext) + __cuda_local_var_39610_9_non_const_offset);
+# 276 "src/ports/cuda/processing.cu"
+_Z11counter_addPhm((AES_data->iv), ((uint64_t)(__cuda_local_var_39610_9_non_const_offset >> 4)));
+# 277 "src/ports/cuda/processing.cu"
+;
+# 280 "src/ports/cuda/processing.cu"
+_Z17AES_encrypt_statePA4_hS0_jPhS1_j(((uint8_t (*)[4])__cuda_local_var_39614_14_non_const_counter), ((uint8_t (*)[4])__cuda_local_var_39615_14_non_const_final_state), ((AES_data->key)->Nb), (AES_data->sbox), (AES_data->expanded_key), ((AES_data->key)->Nr));
+# 286 "src/ports/cuda/processing.cu"
+{
+# 286 "src/ports/cuda/processing.cu"
+ int y;
+# 286 "src/ports/cuda/processing.cu"
+y = 0;
+# 286 "src/ports/cuda/processing.cu"
+for (; (((unsigned)y) < ((AES_data->key)->Nb)); y++) {
+# 287 "src/ports/cuda/processing.cu"
+(*((uint32_t *)(__cuda_local_var_39615_14_non_const_final_state + (4 * y)))) ^= (*((uint32_t *)(__cuda_local_var_39613_14_non_const_plaintext + (4 * y)))); } } 
+# 289 "src/ports/cuda/processing.cu"
+}}
+# 291 "src/ports/cuda/processing.cu"
+__global__ __var_used__ void _Z21AES_encrypt_Redundantv(void){
+# 292 "src/ports/cuda/processing.cu"
+{
+# 293 "src/ports/cuda/processing.cu"
+ int __cuda_local_var_39635_9_non_const_block;
+# 294 "src/ports/cuda/processing.cu"
+ int __cuda_local_var_39636_9_non_const_thread;
+# 295 "src/ports/cuda/processing.cu"
+ int __cuda_local_var_39637_9_non_const_offset;
+# 293 "src/ports/cuda/processing.cu"
+__cuda_local_var_39635_9_non_const_block = ((int)(blockIdx.x));
+# 294 "src/ports/cuda/processing.cu"
+__cuda_local_var_39636_9_non_const_thread = ((int)(threadIdx.x));
+# 295 "src/ports/cuda/processing.cu"
+__cuda_local_var_39637_9_non_const_offset = ((int)(16U * (((unsigned)__cuda_local_var_39636_9_non_const_thread) + (((unsigned)__cuda_local_var_39635_9_non_const_block) * (blockDim.x)))));
+# 296 "src/ports/cuda/processing.cu"
+printf(((const char *)"%d"), __cuda_local_var_39637_9_non_const_offset); 
+# 297 "src/ports/cuda/processing.cu"
+}}

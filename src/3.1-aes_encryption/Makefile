@@ -162,8 +162,10 @@ cuda: main_cuda
 cuda_conf:
 	mkdir -p $(CUDA_TARGET)
 
+# cuda_processing.o:
+
 cuda_processing.o: cuda_conf $(CUDA_SRC)/processing.cu
-	$(NVCC) $(NVCCFLAGS) $(CUFLAGS) -DCUDA -c $(CUDA_SRC)/processing.cu  -o $(CUDA_TARGET)/cuda_processing.o
+	$(NVCC) $(NVCCFLAGS) $(CUFLAGS) -DCUDA -c $(CUDA_SRC)/processing.cu  -o $(CUDA_TARGET)/cuda_processing.o --keep
 
 cuda_device.o: cuda_conf $(CUDA_SRC)/device.cu
 	$(NVCC) $(NVCCFLAGS) $(CUFLAGS) -DCUDA -c $(CUDA_SRC)/device.cu  -o $(CUDA_TARGET)/cuda_device.o $(SMCTRLFLAGS)

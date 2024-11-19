@@ -1,0 +1,18 @@
+Using device: Xavier
+============ OBPMark #3.1 AES Encryption ============
+Implementation           = CUDA
+Plaintext length (bytes) = 1048576 
+Key size (bits)          = 128 
+Nb                       = 4 
+Nk                       = 4 
+Nr                       = 10 
+block_size               = 1024 
+
+
+Benchmark metrics:
+Elapsed time Host->Device = 0.00 ms
+Elapsed time execution = 0.00 ms
+Elapsed time Device->Host = 0.00 ms
+Total execution time = 0.00 ms
+Throughput = inf Mbytes/s
+

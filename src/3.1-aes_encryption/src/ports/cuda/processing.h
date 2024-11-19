@@ -9,10 +9,10 @@
 #include "device.h"
 #include <omp.h>
 
-#define STATE_PARAM	uint8_t state[4][4]
+#define STATE_PARAM uint8_t state[4][4]
 #define INSTATE_PARAM uint8_t in_state[4][4]
 #define STATES_PARAM INSTATE_PARAM, STATE_PARAM
-#define ROUNDKEY_PARAM	uint8_t *roundkey
+#define ROUNDKEY_PARAM uint8_t *roundkey
 #define SBOX_PARAM uint8_t *sbox
 #define NB_PARAM unsigned int Nb
 
@@ -26,6 +26,6 @@
 __global__ void AES_KeyExpansion(DATA_PARAM);
 __global__ void AES_KeyExpansion_Redundant(DATA_PARAM);
 __global__ void AES_encrypt(DATA_PARAM);
-__global__ void AES_encrypt_Redundant(DATA_PARAM);
+__global__ void AES_encrypt_Redundant();
 
 #endif // OBPMARK_AES_H_
